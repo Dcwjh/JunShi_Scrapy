@@ -6,7 +6,7 @@ from wiki.items import EntityItem,RelationItem
 class zhwiki2(scrapy.Spider):
     name = 'zhwiki2'
     start_urls = ['https://wikipedia.hk.wjbk.site/baike-Category:军事']
-    depth_limit = 10
+    depth_limit = 20
 
     def parse(self, response):
         labels = response.xpath('//*[@id="mw-subcategories"]//div[@class="CategoryTreeItem"]//a')
@@ -24,6 +24,8 @@ class zhwiki2(scrapy.Spider):
             items_relation["ID1"] = '0'
             items_relation["ID2"] = entity_id
             items_relation["relation"] = 'subclass'
+            print(items_entity)
+            print(items_relation)
             yield items_entity
             yield items_relation
             # print("实体：" + ','.join((entity_id, label, '军事')))
@@ -55,6 +57,8 @@ class zhwiki2(scrapy.Spider):
                 items_relation["ID1"] = father_id
                 items_relation["ID2"] = sub_category_id
                 items_relation["relation"] = 'subclass'
+                print(items_entity)
+                print(items_relation)
                 yield items_entity
                 yield items_relation
                 # print("实体：" + ','.join((sub_category_id, sub_category_name, label)))
@@ -74,7 +78,7 @@ class zhwiki2(scrapy.Spider):
                 items_relation["ID1"] = father_id
                 items_relation["ID2"] = category_entity_id
                 items_relation["relation"] = 'subclass'
+                print(items_entity)
+                print(items_relation)
                 yield items_entity
                 yield items_relation
-                # print("实体：" + ','.join((category_entity_id, category_entity_name, label)))
-                # print("关系：" + ','.join((category_entity_id, father_id, 'subclass')))
