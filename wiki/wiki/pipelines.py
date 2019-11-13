@@ -5,6 +5,7 @@ class EntityPipeline(object):
     def open_spider(self, spider):
         self.file_entity = open("nodes.csv",'a+', encoding="utf-8")
         self.file_relation = open("edges.csv", 'a+', encoding="utf-8")
+        self.file_keyword = open("Keyword.txt",'a+', encoding="utf-8")
 
     def process_item(self, item, spider):
         if isinstance(item,EntityItem):
