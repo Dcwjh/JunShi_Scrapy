@@ -16,3 +16,4 @@ class RelationItem(scrapy.Item):
     ID1 = scrapy.Field()
     ID2 = scrapy.Field()
     relation = scrapy.Field()
+

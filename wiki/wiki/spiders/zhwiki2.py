@@ -6,14 +6,14 @@ from wiki.items import EntityItem,RelationItem
 class zhwiki2(scrapy.Spider):
     name = 'zhwiki2'
     start_urls = ['https://wikipedia.hk.wjbk.site/baike-Category:军事']
-    depth_limit = 10  # 最多爬取20层
-    i = 0
+    depth_limit = 20
 
     def parse(self, response):
         labels = response.xpath('//*[@id="mw-subcategories"]//div[@class="CategoryTreeItem"]//a')
         for index in range(len(labels)):
-            label = labels[index].xpath('./text()').extract_first()
 
+
+            label = labels[index].xpath('./text()').extract_first()
             entity_url = labels[index].xpath('./@href').extract_first()
             entity_id = '0-c' + str(index)
             items_entity = EntityItem()
@@ -24,9 +24,11 @@ class zhwiki2(scrapy.Spider):
             items_relation["ID1"] = '0'
             items_relation["ID2"] = entity_id
             items_relation["relation"] = 'subclass'
-            self.i = self.i+1
+
             yield items_entity
             yield items_relation
+            # print("实体：" + ','.join((entity_id, label, '军事')))
+            # print("关系：" + ','.join((entity_id, '0', 'subclass')))
             yield scrapy.Request(entity_url, callback=self.parse_entity,
                                  meta={'label': label, 'entity_id': entity_id, 'depth': 0})
 
@@ -54,9 +56,11 @@ class zhwiki2(scrapy.Spider):
                 items_relation["ID1"] = father_id
                 items_relation["ID2"] = sub_category_id
                 items_relation["relation"] = 'subclass'
-                self.i = self.i + 1
+
                 yield items_entity
                 yield items_relation
+                # print("实体：" + ','.join((sub_category_id, sub_category_name, label)))
+                # print("关系：" + ','.join((sub_category_id, father_id, 'subclass')))
                 yield scrapy.Request(sub_category_url, callback=self.parse_entity,
                                      meta={'label': label, 'entity_id': sub_category_id, 'depth': depth})
             #  叶子节点，最终实体
@@ -72,8 +76,6 @@ class zhwiki2(scrapy.Spider):
                 items_relation["ID1"] = father_id
                 items_relation["ID2"] = category_entity_id
                 items_relation["relation"] = 'subclass'
-                self.i = self.i + 1
+
                 yield items_entity
                 yield items_relation
-                # print("实体：" + ','.join((category_entity_id, category_entity_name, label)))
-                # print("关系：" + ','.join((category_entity_id, father_id, 'subclass')))
