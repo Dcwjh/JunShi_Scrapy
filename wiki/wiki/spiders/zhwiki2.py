@@ -24,8 +24,7 @@ class zhwiki2(scrapy.Spider):
             items_relation["ID1"] = '0'
             items_relation["ID2"] = entity_id
             items_relation["relation"] = 'subclass'
-            print(items_entity)
-            print(items_relation)
+
             yield items_entity
             yield items_relation
             # print("实体：" + ','.join((entity_id, label, '军事')))
@@ -57,8 +56,7 @@ class zhwiki2(scrapy.Spider):
                 items_relation["ID1"] = father_id
                 items_relation["ID2"] = sub_category_id
                 items_relation["relation"] = 'subclass'
-                print(items_entity)
-                print(items_relation)
+
                 yield items_entity
                 yield items_relation
                 # print("实体：" + ','.join((sub_category_id, sub_category_name, label)))
@@ -78,7 +76,6 @@ class zhwiki2(scrapy.Spider):
                 items_relation["ID1"] = father_id
                 items_relation["ID2"] = category_entity_id
                 items_relation["relation"] = 'subclass'
-                print(items_entity)
-                print(items_relation)
+
                 yield items_entity
                 yield items_relation

@@ -11,7 +11,7 @@ from wiki.items import RelationItem
 class WikipediaSpider(scrapy.Spider):
     name = 'wikipedia'
     allowed_domains = ['wikipedia.hk.wjbk.site']
-    start_urls = ['https://wikipedia.hk.wjbk.site/baike-Portal:%E8%BB%8D%E4%BA%8B']
+    start_urls = ['https://wikipedia.hk.wjbk.site/baike-Portal:军事']
     headers = {
         "Accept" : "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3",
         "Accept-Language": "zh-CN,zh;q=0.9",
@@ -26,7 +26,7 @@ class WikipediaSpider(scrapy.Spider):
 
     # 分类：标签实体 手动分类
     def parse_first(self, response):
-        list1 = response.xpath('//*[@id="mw-content-text"]/div/table/tbody/tr/td/div[5]/div[4]/div[1]/table/tbody/tr/td[1]/div').extract_first()
+        list1 = response.xpath('//*[@id="mw-content-text"]//div').extract_first()
         list2 = response.xpath('//*[@id="mw-content-text"]/div/table/tbody/tr/td/div[5]/div[4]/div[1]/table/tbody/tr/td[2]/div').extract_first()
 
         pattern = re.compile('<a href="(.*?)" .*?">(.*?)</a>')
