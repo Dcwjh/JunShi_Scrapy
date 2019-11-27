@@ -3,6 +3,8 @@ import re
 from military_crawler.items import ZhWikiKeyword
 from military_crawler.items import NewTriple
 
+# 中和了维基百科和互动百科
+
 
 # 基于中文维基的军事分类,爬取与军事相关的关键词,再利用互动百科和wikidata进行属性扩展
 
